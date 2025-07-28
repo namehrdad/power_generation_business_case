@@ -41,4 +41,4 @@ GRID_DEMAND_CHARGE = 10.0      # $ per kW per month
 
 # Financial Parameters
 INFLATION_RATE = 0.03    # 3% annual inflation affecting all future costs
-DISCOUNT_RATE = 0.08     # 8% discount rate for NPV calculations
+DISCOUNT_RATE = 0.05     # 8% discount rate for NPV calculations
