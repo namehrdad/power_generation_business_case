@@ -31,6 +31,7 @@ grid_rate = st.sidebar.slider("Grid Electricity Rate ($/kWh)", 0.08, 0.20, param
 ng_price = st.sidebar.slider("Natural Gas Price ($/GJ)", 2.0, 8.0, params.NATURAL_GAS_PRICE, 0.1)
 fuel_oil_rate = st.sidebar.slider("Fuel Oil Price ($/Liter)", 1.0, 2.0, params.FUEL_OIL_PRICE, 0.05)
 discount_rate = st.sidebar.slider("Discount Rate (%)", 5, 15, int(params.DISCOUNT_RATE * 100)) / 100
+inflation_rate = st.sidebar.slider("Inflation Rate (%)", 5, 15, int(params.INFLATION_RATE * 100)) / 100
 
 # Update params temporarily for this run
 params.PLANT_SIZE_MW = plant_size
