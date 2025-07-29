@@ -289,7 +289,7 @@ with st.expander("⚙️ Monte Carlo Parameters", expanded=False):
         inflation_std = st.slider("Inflation Rate - Std Dev (%)", 0.5, 2.0, 1.0, 0.1) / 100
         
         # Grid Rate  
-        grid_rate_mean = st.slider("Grid Rate - Mean ($/kWh)", 0.08, 0.20, grid_rate, 0.01)
+        grid_rate_mean = st.slider("Grid Rate - Mean ($/kWh)", 0.02, 0.20, grid_rate, 0.01)
         grid_rate_std = st.slider("Grid Rate - Std Dev ($/kWh)", 0.01, 0.05, 0.02, 0.005)
         
         # Natural Gas Rate
