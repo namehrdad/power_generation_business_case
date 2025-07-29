@@ -30,8 +30,8 @@ land_cost = st.sidebar.slider("Land Cost (Million $)", 5, 25, int(params.LAND_CO
 grid_rate = st.sidebar.slider("Grid Electricity Rate ($/kWh)", 0.08, 0.20, params.GRID_ELECTRICITY_RATE, 0.01)
 ng_price = st.sidebar.slider("Natural Gas Price ($/GJ)", 2.0, 8.0, params.NATURAL_GAS_PRICE, 0.1)
 fuel_oil_rate = st.sidebar.slider("Fuel Oil Price ($/Liter)", 1.0, 2.0, params.FUEL_OIL_PRICE, 0.05)
-discount_rate = st.sidebar.slider("Discount Rate (%)", 5, 15, int(params.DISCOUNT_RATE * 100)) / 100
-inflation_rate = st.sidebar.slider("Inflation Rate (%)", 2, 10, int(params.INFLATION_RATE * 100)) / 100
+discount_rate = st.sidebar.slider("Discount Rate (%)", 3, 15, int(params.DISCOUNT_RATE * 100)) / 100
+inflation_rate = st.sidebar.slider("Inflation Rate (%)", 1, 10, int(params.INFLATION_RATE * 100)) / 100
 
 # Update params temporarily for this run
 params.PLANT_SIZE_MW = plant_size
@@ -42,7 +42,6 @@ params.NATURAL_GAS_PRICE = ng_price
 params.FUEL_OIL_PRICE = fuel_oil_rate
 params.DISCOUNT_RATE = discount_rate
 params.INFLATION_RATE = inflation_rate
-
 # Create business case instance
 bc = main.BusinessCase()
 summary = bc.get_summary()
@@ -96,38 +95,64 @@ fig_npv = px.bar(
 fig_npv.update_layout(showlegend=False, height=400)
 st.plotly_chart(fig_npv, use_container_width=True)
 
-# Annual Cashflow Chart
+# Annual Cashflow Charts
 st.subheader("📈 Annual Costs Over Time")
+
 cashflow_df = pd.DataFrame({
-    'Year': cashflows['years'],
-    'Grid Option': cashflows['grid_annual_costs'],
-    'Proposed Option': cashflows['proposed_annual_costs']
-})
+        'Year': cashflows['years'],
+        'Grid Option': cashflows['grid_annual_costs'],
+        'Proposed Option': cashflows['proposed_annual_costs'],
+        'Costs Difference': cashflows['difference_annual_costs']
+    })
 
-fig_cashflow = go.Figure()
-fig_cashflow.add_trace(go.Scatter(
-    x=cashflow_df['Year'], 
-    y=cashflow_df['Grid Option'],
-    mode='lines+markers',
-    name='Grid Electricity',
-    line=dict(color='#FF6B6B', width=3)
-))
-fig_cashflow.add_trace(go.Scatter(
-    x=cashflow_df['Year'], 
-    y=cashflow_df['Proposed Option'],
-    mode='lines+markers',
-    name='Proposed (NG + Fuel Oil)',
-    line=dict(color='#4ECDC4', width=3)
-))
+col1, col2 = st.columns(2)
 
-fig_cashflow.update_layout(
-    title="Annual Costs (Including Initial CAPEX in Year 0)",
-    xaxis_title="Year",
-    yaxis_title="Annual Cost (Million $)",
-    hovermode='x unified',
-    height=500
-)
-st.plotly_chart(fig_cashflow, use_container_width=True)
+with col1:
+    fig_cashflow = go.Figure()
+    fig_cashflow.add_trace(go.Scatter(
+        x=cashflow_df['Year'], 
+        y=cashflow_df['Grid Option'],
+        mode='lines+markers',
+        name='Grid Electricity',
+        line=dict(color='#FF6B6B', width=3)
+    ))
+    fig_cashflow.add_trace(go.Scatter(
+        x=cashflow_df['Year'], 
+        y=cashflow_df['Proposed Option'],
+        mode='lines+markers',
+        name='Proposed (NG + Fuel Oil)',
+        line=dict(color='#4ECDC4', width=3)
+    ))
+
+    fig_cashflow.update_layout(
+        title="Annual Costs (Including Initial CAPEX in Year 0)",
+        xaxis_title="Year",
+        yaxis_title="Annual Cost (Million $)",
+        hovermode='x unified',
+        height=500
+    )
+    st.plotly_chart(fig_cashflow, use_container_width=True)
+
+with col2:
+    
+    fig_cashflow = go.Figure()
+    fig_cashflow.add_trace(go.Scatter(
+        x=cashflow_df['Year'], 
+        y=cashflow_df['Costs Difference'],
+        mode='lines+markers',
+        name='Annual Costs Difference',
+        line=dict(color="#DEFFA1", width=4)
+    ))
+    
+    fig_cashflow.update_layout(
+        title="Annual Costs Difference (Including Initial CAPEX in Year 0) = SAVINGS",
+        xaxis_title="Year",
+        yaxis_title="Annual Cost (Million $)",
+        hovermode='x unified',
+        height=500
+    )
+    st.plotly_chart(fig_cashflow, use_container_width=True)
+
 
 # Cost Breakdown Section
 st.subheader("🥧 Cost Breakdown Analysis")
@@ -249,8 +274,8 @@ with col2:
 # =======================
 # MONTE CARLO SIMULATION
 # =======================
-st.header("🎲 Monte Carlo Risk Analysis")
-st.markdown("Analyze uncertainty and risk by varying multiple parameters simultaneously")
+st.header("🎲 Monte Carlo Sensitivity and Risk Analysis")
+st.markdown("Analyze uncertainty and sensitivity by varying multiple parameters simultaneously")
 
 # Monte Carlo parameters in expandable section
 with st.expander("⚙️ Monte Carlo Parameters", expanded=False):
