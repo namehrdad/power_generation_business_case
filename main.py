@@ -196,10 +196,12 @@ class BusinessCase:
         years = list(range(0, self.analysis_period + 1))
         grid_costs = []
         proposed_costs = []
-        
+        difference = [] #accummulated saveing : baseline - propose
+
         # Year 0 - Initial investment
-        grid_costs.append(0)  # No upfront cost for grid
+        grid_costs.append(params.CONNECTION_INSTALLATION_COST)  # No upfront cost for grid
         proposed_costs.append(self.calculate_total_capex())
+        difference.append(params.CONNECTION_INSTALLATION_COST - self.calculate_total_capex() )
         
         # Years 1 to analysis period
         for year_num in range(1, self.analysis_period + 1):
@@ -212,11 +214,14 @@ class BusinessCase:
             # Proposed option annual cost  
             proposed_annual = self.calculate_annual_operating_cost(year_num)
             proposed_costs.append(proposed_annual)
-        
+
+            difference.append(sum(grid_costs) - sum(proposed_costs))
+
         return {
             'years': years,
             'grid_annual_costs': grid_costs,
-            'proposed_annual_costs': proposed_costs
+            'proposed_annual_costs': proposed_costs,
+            'difference_annual_costs': difference
         }
 
 class MonteCarloAnalysis:
@@ -318,7 +323,7 @@ class MonteCarloAnalysis:
     def get_default_mc_params(self):
         """Default Monte Carlo parameters"""
         return {
-            'inflation_rate_mean': 0.02,     # 2% inflation
+            'inflation_rate_mean': params.INFLATION_RATE,     # 2% inflation
             'inflation_rate_std': 0.01,      # ±1% std
             'grid_rate_mean': params.GRID_ELECTRICITY_RATE,
             'grid_rate_std': 0.02,           # ±2¢/kWh std
