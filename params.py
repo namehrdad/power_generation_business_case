@@ -10,12 +10,12 @@ ANALYSIS_PERIOD_YEARS = 25
 MILLION = 1_000_000
 
 # Cost Categories (in millions of dollars)
-EQUIPMENT_COST = 150.0        # Total equipment cost in million $
+EQUIPMENT_COST = 150      # Total equipment cost in million $
 INSTALLATION_FACTOR = 3.0     # Installation cost = equipment cost * this factor
 LAND_COST = 10.0             # Land cost in million $
 
 # Operational Parameters
-CAPACITY_FACTOR = 0.85  # How often the plant runs (85%)
+CAPACITY_FACTOR = 0.9  # How often the plant runs (85%)
 HOURS_PER_YEAR = 8760
 EFFICIENCY = 0.45 # Efficiency of the generators (45%)
 
@@ -36,6 +36,7 @@ MAJOR_MAINTENANCE_YEARS = [3, 6, 9, 12, 15, 18]  # Years when major maintenance 
 MAJOR_MAINTENANCE_COST_PERCENT = 0.10  # 10% of equipment cost
 
 # Grid Electricity (baseline comparison)
+CONNECTION_INSTALLATION_COST = 5 # MIL$ - for grid connection equipment
 GRID_ELECTRICITY_RATE = 0.12   # $ per kWh from grid
 GRID_DEMAND_CHARGE = 10.0      # $ per kW per month
 
