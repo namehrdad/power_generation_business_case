@@ -37,7 +37,7 @@ MAJOR_MAINTENANCE_COST_PERCENT = 0.10  # 10% of equipment cost
 
 # Grid Electricity (baseline comparison)
 CONNECTION_INSTALLATION_COST = 5 # MIL$ - for grid connection equipment
-GRID_ELECTRICITY_RATE = 0.12   # $ per kWh from grid
+GRID_ELECTRICITY_RATE = 0.06   # $ per kWh from grid
 GRID_DEMAND_CHARGE = 10.0      # $ per kW per month
 
 # Financial Parameters
