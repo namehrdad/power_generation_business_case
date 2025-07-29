@@ -27,7 +27,7 @@ st.sidebar.header("📊 Adjust Parameters")
 plant_size = st.sidebar.slider("Plant Size (MW)", 50, 200, params.PLANT_SIZE_MW)
 equipment_cost = st.sidebar.slider("Equipment Cost (Million $)", 100, 300, int(params.EQUIPMENT_COST))
 land_cost = st.sidebar.slider("Land Cost (Million $)", 5, 25, int(params.LAND_COST))
-grid_rate = st.sidebar.slider("Grid Electricity Rate ($/kWh)", 0.08, 0.20, params.GRID_ELECTRICITY_RATE, 0.01)
+grid_rate = st.sidebar.slider("Grid Electricity Rate ($/kWh)", 0.03, 0.20, params.GRID_ELECTRICITY_RATE, 0.01)
 ng_price = st.sidebar.slider("Natural Gas Price ($/GJ)", 2.0, 8.0, params.NATURAL_GAS_PRICE, 0.1)
 fuel_oil_rate = st.sidebar.slider("Fuel Oil Price ($/Liter)", 1.0, 2.0, params.FUEL_OIL_PRICE, 0.05)
 discount_rate = st.sidebar.slider("Discount Rate (%)", 3, 15, int(params.DISCOUNT_RATE * 100)) / 100
@@ -110,22 +110,22 @@ col1, col2 = st.columns(2)
 with col1:
     fig_cashflow = go.Figure()
     fig_cashflow.add_trace(go.Scatter(
-        x=cashflow_df['Year'], 
-        y=cashflow_df['Grid Option'],
+        x=cashflow_df['Year'].iloc[1:], 
+        y=cashflow_df['Grid Option'].iloc[1:],
         mode='lines+markers',
         name='Grid Electricity',
         line=dict(color='#FF6B6B', width=3)
     ))
     fig_cashflow.add_trace(go.Scatter(
-        x=cashflow_df['Year'], 
-        y=cashflow_df['Proposed Option'],
+        x=cashflow_df['Year'].iloc[1:], 
+        y=cashflow_df['Proposed Option'].iloc[1:],
         mode='lines+markers',
         name='Proposed (NG + Fuel Oil)',
         line=dict(color='#4ECDC4', width=3)
     ))
 
     fig_cashflow.update_layout(
-        title="Annual Costs (Including Initial CAPEX in Year 0)",
+        title="Annual Costs (Excluding Initial CAPEX in Year 0)",
         xaxis_title="Year",
         yaxis_title="Annual Cost (Million $)",
         hovermode='x unified',
@@ -145,7 +145,7 @@ with col2:
     ))
     
     fig_cashflow.update_layout(
-        title="Annual Costs Difference (Including Initial CAPEX in Year 0) = SAVINGS",
+        title="Annual Costs Difference (Including Initial CAPEX in Year 0) = ACCUMULATED SAVINGS",
         xaxis_title="Year",
         yaxis_title="Annual Cost (Million $)",
         hovermode='x unified',
