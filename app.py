@@ -32,7 +32,7 @@ ng_price = st.sidebar.slider("Natural Gas Price ($/GJ)", 1.0, 8.0, params.NATURA
 fuel_oil_rate = st.sidebar.slider("Fuel Oil Price ($/Liter)", 1.0, 2.0, params.FUEL_OIL_PRICE, 0.05)
 discount_rate = st.sidebar.slider("Discount Rate (%)", 0, 15, int(params.DISCOUNT_RATE * 100)) / 100
 inflation_rate = st.sidebar.slider("Inflation Rate (%)", 0, 10, int(params.INFLATION_RATE * 100)) / 100
-operations_cost = st.sidebar.slider("Operations Cost ($/year)", 0.5, 5, int(params.OM_COST_ANNUAL),0.5)
+operations_cost = st.sidebar.slider("Operations Cost ($/year)", 0.5, 5, int(params.OM_COST_ANNUAL))
 # Update params temporarily for this run
 params.PLANT_SIZE_MW = plant_size
 params.EQUIPMENT_COST = equipment_cost
@@ -42,7 +42,7 @@ params.NATURAL_GAS_PRICE = ng_price
 params.FUEL_OIL_PRICE = fuel_oil_rate
 params.DISCOUNT_RATE = discount_rate
 params.INFLATION_RATE = inflation_rate
-param.OM_COST_ANNUAL = operations_cost
+params.OM_COST_ANNUAL = operations_cost
 # Create business case instance
 bc = main.BusinessCase()
 summary = bc.get_summary()
@@ -567,5 +567,6 @@ if 'mc_results' in st.session_state:
 
 else:
     st.info("👆 Click 'Run Monte Carlo Simulation' above to analyze uncertainty and risk in your business case")
+
 
 
