@@ -30,9 +30,9 @@ land_cost = st.sidebar.slider("Land Cost (Million $)", 5, 25, int(params.LAND_CO
 grid_rate = st.sidebar.slider("Grid Electricity Rate ($/kWh)", 0.03, 0.20, params.GRID_ELECTRICITY_RATE, 0.01)
 ng_price = st.sidebar.slider("Natural Gas Price ($/GJ)", 2.0, 8.0, params.NATURAL_GAS_PRICE, 0.1)
 fuel_oil_rate = st.sidebar.slider("Fuel Oil Price ($/Liter)", 1.0, 2.0, params.FUEL_OIL_PRICE, 0.05)
-discount_rate = st.sidebar.slider("Discount Rate (%)", 3, 15, int(params.DISCOUNT_RATE * 100)) / 100
-inflation_rate = st.sidebar.slider("Inflation Rate (%)", 1, 10, int(params.INFLATION_RATE * 100)) / 100
-
+discount_rate = st.sidebar.slider("Discount Rate (%)", 0, 15, int(params.DISCOUNT_RATE * 100)) / 100
+inflation_rate = st.sidebar.slider("Inflation Rate (%)", 0, 10, int(params.INFLATION_RATE * 100)) / 100
+operations_cost = st.sidebar.slider("Operations Cost ($/month)", 1, 10, int(params.op))
 # Update params temporarily for this run
 params.PLANT_SIZE_MW = plant_size
 params.EQUIPMENT_COST = equipment_cost
@@ -566,3 +566,4 @@ if 'mc_results' in st.session_state:
 
 else:
     st.info("👆 Click 'Run Monte Carlo Simulation' above to analyze uncertainty and risk in your business case")
+
